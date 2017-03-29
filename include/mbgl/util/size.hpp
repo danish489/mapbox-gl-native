@@ -3,12 +3,13 @@
 #include <cstdint>
 #include <array>
 
+#include <limits>
+
 namespace mbgl {
 
 class Size {
 public:
-    constexpr Size() : width(0), height(0) {
-    }
+    constexpr Size() = default;
 
     constexpr Size(const uint32_t width_, const uint32_t height_) : width(width_), height(height_) {
     }
@@ -18,11 +19,13 @@ public:
     }
 
     constexpr explicit operator bool() const {
-        return width > 0 && height > 0;
+        return (width > 0 && height > 0)
+            && (width != std::numeric_limits<uint32_t>::max())
+            && (height != std::numeric_limits<uint32_t>::max());
     }
 
-    uint32_t width;
-    uint32_t height;
+    uint32_t width = 0;
+    uint32_t height = 0;
 };
 
 constexpr inline bool operator==(const Size& a, const Size& b) {
