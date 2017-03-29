@@ -433,6 +433,8 @@ void QMapboxGLSettings::setApiBaseUrl(const QString& url)
 QMapboxGL::QMapboxGL(QObject *parent, const QMapboxGLSettings &settings, const QSize& size, qreal pixelRatio)
     : QObject(parent)
 {
+    assert(!size.isEmpty());
+
     // Multiple QMapboxGL running on the same thread
     // will share the same mbgl::util::RunLoop
     if (!loop.hasLocalData()) {
